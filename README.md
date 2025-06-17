@@ -70,15 +70,39 @@ In advanced stages, the focus shifts to improving query performance. Some optimi
 ## 15 Practice Questions
 
 ### Easy Level
-1. Retrieve the names of all tracks that have more than 1 billion streams.
+1. **Retrieve the names of all tracks that have more than 1 billion streams.**
  ```sql
-
-
+SELECT track, stream
+FROM spotify
+WHERE stream > 1000000000
+ORDER BY stream DESC;
 ```
-3. List all albums along with their respective artists.
-4. Get the total number of comments for tracks where `licensed = TRUE`.
-5. Find all tracks that belong to the album type `single`.
-6. Count the total number of tracks by each artist.
+2. **List all albums along with their respective artists.**
+ ```sql
+SELECT DISTINCT album, artist
+FROM spotify
+ORDER BY 1;
+```
+3. **Get the total number of comments for tracks where `licensed = TRUE`.**
+```sql
+SELECT track, SUM(comments)
+FROM spotify
+WHERE licensed = 'true'
+GROUP BY 1;
+``` 
+4. **Find all tracks that belong to the album type `single`.**
+```sql
+SELECT track, album_type
+FROM spotify
+WHERE album_type = 'single';
+``` 
+5. **Count the total number of tracks by each artist.**
+```sql
+SELECT artist, COUNT(track)
+FROM spotify
+GROUP BY 1
+ORDER BY 2 DESC;
+```  
 
 ### Medium Level
 1. **Calculate the average danceability of tracks in each album.**
@@ -88,20 +112,26 @@ FROM spotify
 GROUP BY 1
 ORDER BY AVG(danceability) DESC;
 ```
-3. **Find the top 5 tracks with the highest energy values.**
+2. **Find the top 5 tracks with the highest energy values.**
  ```sql
 SELECT track, energy_liveness
 FROM spotify
 ORDER BY 2
 LIMIT 5;
 ``` 
-5. **List all tracks along with their views and likes where `official_video = TRUE`.**
+3. **List all tracks along with their views and likes where `official_video = TRUE`.**
  ```sql
 
 
 ``` 
-7. For each album, calculate the total views of all associated tracks.
-8. Retrieve the track names that have been streamed on Spotify more than YouTube.
+4. **For each album, calculate the total views of all associated tracks.**
+```sql
+
+```  
+5. **Retrieve the track names that have been streamed on Spotify more than YouTube.**
+```sql
+
+```  
 
 ### Advanced Level
 1. Find the top 3 most-viewed tracks for each artist using window functions.
