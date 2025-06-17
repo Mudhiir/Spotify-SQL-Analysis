@@ -109,19 +109,27 @@ ORDER BY AVG(danceability) DESC;
 ```
 2. **Find the top 5 tracks with the highest energy values.**
  ```sql
-SELECT track, energy_liveness
+SELECT track, MAX(energy)
 FROM spotify
-ORDER BY 2
+GROUP BY 1
+ORDER BY 2 DESC
 LIMIT 5;
 ``` 
 3. **List all tracks along with their views and likes where `official_video = TRUE`.**
  ```sql
-
+SELECT album, SUM(views) AS total_views, SUM(likes) AS total_likes
+FROM spotify
+WHERE official_video = 'true'
+GROUP BY 1
+ORDER BY 2 DESC;
 
 ``` 
 4. **For each album, calculate the total views of all associated tracks.**
 ```sql
-
+SELECT album, track, SUM(views)
+FROM spotify
+GROUP BY 1, 2
+ORDER BY 3 DESC;
 ```  
 5. **Retrieve the track names that have been streamed on Spotify more than YouTube.**
 ```sql
