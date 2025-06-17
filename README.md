@@ -1,8 +1,9 @@
-# Spotify Advanced SQL Project and Query Optimization P-6
+# Spotify SQL Project
 Project Category: Advanced
 [Click Here to get Dataset](https://www.kaggle.com/datasets/sanjanchaudhari/spotify-dataset)
 
-![Spotify Logo](https://github.com/najirh/najirh-Spotify-Data-Analysis-using-SQL/blob/main/spotify_logo.jpg)
+![Spotify Logo]![image](https://github.com/user-attachments/assets/f6b873fc-7d2e-43bf-a635-b66be1a10782)
+ 
 
 ## Overview
 This project involves analyzing a Spotify dataset with various attributes about tracks, albums, and artists using **SQL**. It covers an end-to-end process of normalizing a denormalized dataset, performing SQL queries of varying complexity (easy, medium, and advanced), and optimizing query performance. The primary goals of the project are to practice advanced SQL skills and generate valuable insights from the dataset.
@@ -70,17 +71,37 @@ In advanced stages, the focus shifts to improving query performance. Some optimi
 
 ### Easy Level
 1. Retrieve the names of all tracks that have more than 1 billion streams.
-2. List all albums along with their respective artists.
-3. Get the total number of comments for tracks where `licensed = TRUE`.
-4. Find all tracks that belong to the album type `single`.
-5. Count the total number of tracks by each artist.
+ ```sql
+
+
+```
+3. List all albums along with their respective artists.
+4. Get the total number of comments for tracks where `licensed = TRUE`.
+5. Find all tracks that belong to the album type `single`.
+6. Count the total number of tracks by each artist.
 
 ### Medium Level
-1. Calculate the average danceability of tracks in each album.
-2. Find the top 5 tracks with the highest energy values.
-3. List all tracks along with their views and likes where `official_video = TRUE`.
-4. For each album, calculate the total views of all associated tracks.
-5. Retrieve the track names that have been streamed on Spotify more than YouTube.
+1. **Calculate the average danceability of tracks in each album.**
+ ```sql
+SELECT album, AVG(danceability)
+FROM spotify
+GROUP BY 1
+ORDER BY AVG(danceability) DESC;
+```
+3. **Find the top 5 tracks with the highest energy values.**
+ ```sql
+SELECT track, energy_liveness
+FROM spotify
+ORDER BY 2
+LIMIT 5;
+``` 
+5. **List all tracks along with their views and likes where `official_video = TRUE`.**
+ ```sql
+
+
+``` 
+7. For each album, calculate the total views of all associated tracks.
+8. Retrieve the track names that have been streamed on Spotify more than YouTube.
 
 ### Advanced Level
 1. Find the top 3 most-viewed tracks for each artist using window functions.
@@ -106,46 +127,8 @@ ORDER BY 2 DESC
 5. Find tracks where the energy-to-liveness ratio is greater than 1.2.
 6. Calculate the cumulative sum of likes for tracks ordered by the number of views, using window functions.
 
-
-Here’s an updated section for your **Spotify Advanced SQL Project and Query Optimization** README, focusing on the query optimization task you performed. You can include the specific screenshots and graphs as described.
-
 ---
 
-## Query Optimization Technique 
-
-To improve query performance, we carried out the following optimization process:
-
-- **Initial Query Performance Analysis Using `EXPLAIN`**
-    - We began by analyzing the performance of a query using the `EXPLAIN` function.
-    - The query retrieved tracks based on the `artist` column, and the performance metrics were as follows:
-        - Execution time (E.T.): **7 ms**
-        - Planning time (P.T.): **0.17 ms**
-    - Below is the **screenshot** of the `EXPLAIN` result before optimization:
-      ![EXPLAIN Before Index](https://github.com/najirh/najirh-Spotify-Data-Analysis-using-SQL/blob/main/spotify_explain_before_index.png)
-
-- **Index Creation on the `artist` Column**
-    - To optimize the query performance, we created an index on the `artist` column. This ensures faster retrieval of rows where the artist is queried.
-    - **SQL command** for creating the index:
-      ```sql
-      CREATE INDEX idx_artist ON spotify_tracks(artist);
-      ```
-
-- **Performance Analysis After Index Creation**
-    - After creating the index, we ran the same query again and observed significant improvements in performance:
-        - Execution time (E.T.): **0.153 ms**
-        - Planning time (P.T.): **0.152 ms**
-    - Below is the **screenshot** of the `EXPLAIN` result after index creation:
-      ![EXPLAIN After Index](https://github.com/najirh/najirh-Spotify-Data-Analysis-using-SQL/blob/main/spotify_explain_after_index.png)
-
-- **Graphical Performance Comparison**
-    - A graph illustrating the comparison between the initial query execution time and the optimized query execution time after index creation.
-    - **Graph view** shows the significant drop in both execution and planning times:
-      ![Performance Graph](https://github.com/najirh/najirh-Spotify-Data-Analysis-using-SQL/blob/main/spotify_graphical%20view%203.png)
-      ![Performance Graph](https://github.com/najirh/najirh-Spotify-Data-Analysis-using-SQL/blob/main/spotify_graphical%20view%202.png)
-      ![Performance Graph](https://github.com/najirh/najirh-Spotify-Data-Analysis-using-SQL/blob/main/spotify_graphical%20view%201.png)
-
-This optimization shows how indexing can drastically reduce query time, improving the overall performance of our database operations in the Spotify project.
----
 
 ## Technology Stack
 - **Database**: PostgreSQL
