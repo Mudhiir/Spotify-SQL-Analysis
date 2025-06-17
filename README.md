@@ -2,8 +2,7 @@
 Project Category: Advanced
 [Click Here to get Dataset](https://www.kaggle.com/datasets/sanjanchaudhari/spotify-dataset)
 
-![OIP](https://github.com/user-attachments/assets/49ed59bd-4855-49e0-8386-56b6b45426f1)
-
+![OIP](https://github.com/user-attachments/assets/920a1bbe-f783-41c9-8901-7d2b472cf08f)
  
 
 ## Overview
