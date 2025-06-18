@@ -133,15 +133,45 @@ ORDER BY 3 DESC;
 ```  
 5. **Retrieve the track names that have been streamed on Spotify more than YouTube.**
 ```sql
-
+SELECT * FROM
+(SELECT
+	track,
+	COALESCE(SUM(CASE WHEN most_played_on = 'Youtube' THEN stream END),0) AS streamed_on_youtube,
+	COALESCE(SUM(CASE WHEN most_played_on = 'Spotify' THEN stream END),0) AS streamed_on_spotify
+FROM spotify
+GROUP BY 1
+) AS S
+WHERE streamed_on_spotify > streamed_on_youtube
+	AND  streamed_on_youtube <> 0
 ```  
 
 ### Advanced Level
-1. Find the top 3 most-viewed tracks for each artist using window functions.
-2. Write a query to find tracks where the liveness score is above the average.
+1. **Find the top 3 most-viewed tracks for each artist using window functions.**
+```sql
+WITH artist_rank
+AS
+(SELECT
+	artist,
+	track,
+	SUM(views),
+	DENSE_RANK() OVER(PARTITION BY artist ORDER BY SUM(views) DESC) AS ranking
+FROM spotify
+GROUP BY 1, 2
+ORDER BY 1, 3 DESC
+)
+SELECT * FROM artist_rank
+WHERE ranking <= 3;
+``` 
+2. **Write a query to find tracks where the liveness score is above the average.**
+```sql
+SELECT artist, track, liveness
+FROM spotify
+WHERE liveness > (SELECT AVG(liveness) FROM spotify)
+ORDER BY 3 DESC;
+```  
 3. **Use a `WITH` clause to calculate the difference between the highest and lowest energy values for tracks in each album.**
 ```sql
-WITH cte
+WITH energyDiff
 AS
 (SELECT 
 	album,
@@ -153,12 +183,12 @@ GROUP BY 1
 SELECT 
 	album,
 	highest_energy - lowest_energery as energy_diff
-FROM cte
+FROM energyDiff
 ORDER BY 2 DESC
 ```
    
-5. Find tracks where the energy-to-liveness ratio is greater than 1.2.
-6. Calculate the cumulative sum of likes for tracks ordered by the number of views, using window functions.
+4. Find tracks where the energy-to-liveness ratio is greater than 1.2.
+5. Calculate the cumulative sum of likes for tracks ordered by the number of views, using window functions.
 
 ---
 
